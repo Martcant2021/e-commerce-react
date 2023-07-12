@@ -1,14 +1,17 @@
 import React, { useEffect, useState } from "react";
 import { getProducts } from "../services/Api";
+import "./PageStyles.css"
 import Loading from "../ApiStatus/Loading";
 import Error from "../ApiStatus/Error";
 import Success from "../ApiStatus/Success";
+import Navbar from "../Navbar/Navbar";
+
 
 const Products = () => {
   const [products, setProducts] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [success, setSuccess] = useState(null);
+  const [success] = useState(null);
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -28,6 +31,7 @@ const Products = () => {
 
   return (
     <div>
+      <Navbar/>
       <h2>Products</h2>
 
       {isLoading && <Loading />}
@@ -35,14 +39,15 @@ const Products = () => {
       {success && <Success message={success} />}
 
       {!isLoading && !error && !success && (
-        <ul>
+        <div className="product-grid">
           {products.map((product) => (
-            <li key={product.id}>
-              <p>{product.title}</p>
-              <p>{product.price}</p>
-            </li>
+            <div key={product.id} className="product">
+              <img src={product.images} alt={product.title} className="product-image" />
+              <p className="product-title">{product.title}</p>
+              <p className="product-price">$ {product.price}</p>
+            </div>
           ))}
-        </ul>
+        </div>
       )}
     </div>
   );

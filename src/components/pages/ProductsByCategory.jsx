@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from "react";
 import { useLocation } from "react-router-dom";
 import { getProductsByCategory } from "../services/Api";
+import Navbar from "../Navbar/Navbar";
 
 
 const ProductsByCategory = ()=>{
@@ -25,6 +26,7 @@ const ProductsByCategory = ()=>{
 
     return(
         <div>
+            <Navbar />
             <h2>products by categories</h2>
             <ul>
                 {products.map((product)=>(

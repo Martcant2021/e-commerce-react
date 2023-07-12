@@ -11,7 +11,7 @@ const categoriesPage = () => {
   const [categories, setCategories] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
-  const [success, setSuccess] = useState(null);
+  const [success] = useState(null);
 
   useEffect(() => {
     const fetchCategories = async () => {
@@ -42,7 +42,7 @@ const categoriesPage = () => {
         <ul>
           {categories.map((category) => (
             <div key={category.id}>
-              <Link to={`/productfor?category=${category.id}`}>
+              <Link to={`/products?category=${category.id}`}>
                 <h1>{category.name}</h1>
               </Link>
             </div>

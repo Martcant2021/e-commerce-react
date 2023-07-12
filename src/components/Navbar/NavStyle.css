@@ -1,0 +1,40 @@
+/*Nav styles*/
+
+.navbar {
+    position: static;
+    top: 5px;
+    width: 100%;
+    background-color: #333;
+    color: #fff;
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+    border-radius: 10px;
+
+  }
+  
+  .navbar-brand {
+    font-weight: bold;
+    font-size: 1.5rem;
+    padding-left: 2px;
+  }
+  
+  .navbar-links {
+    list-style: none;
+    display: flex;
+    gap: 10px;
+    padding: 2px;
+    padding-top: 5px;
+  }
+  
+  .navbar-link {
+    text-decoration: none;
+    color: #fff;
+    padding: 5px;
+  }
+  
+  .navbar-link:hover {
+    background-color: #555;
+  }
+  
+
