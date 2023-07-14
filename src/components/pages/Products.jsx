@@ -33,7 +33,6 @@ const Products = () => {
     <div>
       <Navbar/>
       <h2>Products</h2>
-
       {isLoading && <Loading />}
       {error && <Error message={error} />}
       {success && <Success message={success} />}

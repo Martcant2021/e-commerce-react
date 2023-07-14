@@ -7,9 +7,9 @@ import  Success  from "../ApiStatus/Success";
 import Navbar from "../Navbar/Navbar";
 
 
-const categoriesPage = () => {
+const CategoriesPage = () => {
   const [categories, setCategories] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
   const [success] = useState(null);
 
@@ -31,26 +31,25 @@ const categoriesPage = () => {
   }, []);
 
   return (
-    <div>
-        <Navbar />
+    <div className="categories">
+      <Navbar />
       <h2>Categories</h2>
       {isLoading && <Loading />}
       {error && <Error message={error} />}
       {success && <Success message={success} />}
 
       {!isLoading && !error && !success && (
-        <ul>
+        <div className="categories-grid">
           {categories.map((category) => (
-            <div key={category.id}>
-              <Link to={`/products?category=${category.id}`}>
-                <h1>{category.name}</h1>
+              <Link to={`/products?category=${category.id}`}className="category-item">
+              <img src={category.image} alt={category.name} className="category-image" />
+              <h1 className="category-name">{category.name}</h1>
               </Link>
-            </div>
           ))}
-        </ul>
+        </div>
       )}
     </div>
   );
 };
 
-export default categoriesPage;
+export default CategoriesPage;

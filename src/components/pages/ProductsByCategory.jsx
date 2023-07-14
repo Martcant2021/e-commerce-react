@@ -4,11 +4,15 @@ import { getProductsByCategory } from "../services/Api";
 import Navbar from "../Navbar/Navbar";
 
 
+
 const ProductsByCategory = ()=>{
     const location = useLocation();
     const searchParams = new URLSearchParams(location.search);
     const categoryId = searchParams.get('category');
     const [products, setProducts] = useState([]);
+
+
+
 
 
     useEffect(()=>{
@@ -20,19 +24,24 @@ const ProductsByCategory = ()=>{
                 console.error('error fetching category', error)
             }
         };
-
         fethProductsByCategory()
     }, [categoryId]);
 
     return(
         <div>
             <Navbar />
-            <h2>products by categories</h2>
-            <ul>
-                {products.map((product)=>(
-                    <li key={product.id}>{product.title}</li>
+            <h2>Products by category</h2>
+            {/* NO FUNCIONA mostrar el nombre de la categoria seleccionada en pantalla. Ej: furniture products */}
+            {/* <h2 >{products.name}</h2> */}
+            <div className="product-grid">
+            {products.map((product)=>(
+                    <div key={product.id} className="product">
+                        <img src={product.images} alt={product.title} className="product-image"/>
+                        <p className="product-title">{product.title}</p>
+                        <p className="product-price">$ {product.price}</p>
+                    </div>
                 ))}
-            </ul>
+            </div>
         </div>
 
     )
