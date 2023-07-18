@@ -1,43 +1,27 @@
-import React, { useEffect, useState } from "react";
-import { getProducts } from "../services/Api";
+import React from "react";
+import { getProducts } from "../services/ProductsApi";
+import { useQuery } from 'react-query';
 import "./PageStyles.css"
 import Loading from "../ApiStatus/Loading";
 import Error from "../ApiStatus/Error";
-import Success from "../ApiStatus/Success";
-import Navbar from "../Navbar/Navbar";
+import Navbar from "../Layout/Navbar";
 
 
 const Products = () => {
-  const [products, setProducts] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState(null);
-  const [success] = useState(null);
+  const {data: products, isLoading, error, isSuccess} = useQuery('products', getProducts);
 
-  useEffect(() => {
-    const fetchProducts = async () => {
-      try {
-        const productsData = await getProducts();
-        setProducts(productsData);
-        setIsLoading(false);
-      } catch (error) {
-        console.error(error);
-        setIsLoading(false);
-        setError('Error fetching products. Please try again later.');
-      }
-    };
 
-    fetchProducts();
-  }, []);
+
 
   return (
     <div>
       <Navbar/>
+
       <h2>Products</h2>
       {isLoading && <Loading />}
-      {error && <Error message={error} />}
-      {success && <Success message={success} />}
+      {error && <Error />}
 
-      {!isLoading && !error && !success && (
+      {!isLoading && !error && isSuccess &&(
         <div className="product-grid">
           {products.map((product) => (
             <div key={product.id} className="product">
