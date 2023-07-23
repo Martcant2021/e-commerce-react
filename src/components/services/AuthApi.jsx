@@ -39,15 +39,34 @@ export const getUserById = async (userId) =>{
     }
 };
 
-export const registerUser = async (userData) =>{
-    try{
-        const response = await axios.post(API_URL, userData);
-        return response.data
-    }catch (error){
-        console.error('Error registering user', error);
-        throw error;
-    }
-}
+
+
+
+export const registerUser = async (userData) => {
+  try {
+    // NO FUNCIONA is-available de la API, siempe da como respuesta false
+    // const emailValidate = userData.email;
+    // const isAvailableResponse = await axios.post(`${API_URL}/is-available`, {
+    //   email: emailValidate
+    // });
+    // console.log(isAvailableResponse.data)
+    // const isAvailable = isAvailableResponse.data;
+
+    // if (!isAvailable) {
+    //   throw new Error('Existing user');
+    // }else{
+        
+        
+    // }
+    const response = await axios.post(API_URL, userData);
+    return response.data;
+  } catch (error) {
+    console.error('Error registering user', error);
+    throw error;
+  }
+};
+
+
 
 export const updateUser = async (userId, userData) =>{
     try {

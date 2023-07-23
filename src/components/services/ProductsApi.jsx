@@ -6,7 +6,8 @@ const API_URL = 'https://api.escuelajs.co/api/v1';
 
 export const getProducts = async (offset, limit, title, minPrice, maxPrice) => {
     const params = new URLSearchParams();
-    if (limit) params.append('limit',limit)
+    if (offset!==null) {params.append('offset',offset)}
+    if (limit!==null) {params.append('limit',limit)}
     if (title) params.append('title',title)
     if (minPrice) params.append('min_price',minPrice)
     if (maxPrice) params.append('max_price',maxPrice)

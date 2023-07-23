@@ -17,17 +17,19 @@ const Login = () =>{
         e.preventDefault();
         try{
             await loginMutation.mutateAsync({ email: email, password: password})
+            setError(false)
             navigate('/')
         }catch(error){
             setError(true)
             console.error('error', error)
         }
     }
+    
 
     return(
         <div>
             <h1>Login</h1>
-            {error && <Error />}
+            {error && <Error message="incorrect password or invalid email"/>}
             <form onSubmit={handleLogin}>
                 <div>
                     <label htmlFor="email">Email:</label>
@@ -42,7 +44,7 @@ const Login = () =>{
 
 
             <h2>Yo are not registered?</h2>
-            <Link to={"/CreateUser"} >create User</Link>
+            <Link to={"/register"} >create User</Link>
         </div>
     )
 }
