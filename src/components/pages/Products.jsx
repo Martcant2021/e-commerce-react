@@ -1,45 +1,38 @@
-import React, { useEffect, useState } from "react";
-import { getProducts } from "../services/Api";
-import "./PageStyles.css"
+import React, { useState } from "react";
+import { getProducts } from "../services/ProductsApi";
+import { useInfiniteQuery, useQuery } from 'react-query';
+import "./PageStyles.css";
 import Loading from "../ApiStatus/Loading";
 import Error from "../ApiStatus/Error";
-import Success from "../ApiStatus/Success";
-import Navbar from "../Navbar/Navbar";
-
+import Navbar from "../Layout/Navbar";
 
 const Products = () => {
-  const [products, setProducts] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState(null);
-  const [success] = useState(null);
+  const { data, isLoading, isError, isSuccess, fetchNextPage, hasNextPage } = useInfiniteQuery('products',({pageParam={offset:0,limit:40}})=> getProducts(pageParam.offset, pageParam.limit),
+  {
 
-  useEffect(() => {
-    const fetchProducts = async () => {
-      try {
-        const productsData = await getProducts();
-        setProducts(productsData);
-        setIsLoading(false);
-      } catch (error) {
-        console.error(error);
-        setIsLoading(false);
-        setError('Error fetching products. Please try again later.');
-      }
-    };
+    getNextPageParam: (lastPage) =>{
+      if (lastPage.length ===0)return false;
+        return {
+          offset : lastPage.length ,
+          limit:40  
+        }
+    }
+  });
 
-    fetchProducts();
-  }, []);
+
+  if(isLoading)  return <Loading />
+  if(isError)  return <Error />
+
+    const allPages = data.pages.flat()
 
   return (
     <div>
-      <Navbar/>
-      <h2>Products</h2>
-      {isLoading && <Loading />}
-      {error && <Error message={error} />}
-      {success && <Success message={success} />}
+      <Navbar />
 
-      {!isLoading && !error && !success && (
+      <h2>Products</h2>
+
         <div className="product-grid">
-          {products.map((product) => (
+          {allPages.map((product) => (
             <div key={product.id} className="product">
               <img src={product.images} alt={product.title} className="product-image" />
               <p className="product-title">{product.title}</p>
@@ -47,6 +40,10 @@ const Products = () => {
             </div>
           ))}
         </div>
+        
+        {isSuccess && hasNextPage && (
+
+        <button onClick={() => fetchNextPage()} disabled={hasNextPage == data}>More products</button>  
       )}
     </div>
   );

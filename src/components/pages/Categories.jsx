@@ -1,47 +1,30 @@
 import React, { useEffect, useState } from "react";
+import { useQuery } from 'react-query';
 import { Link } from "react-router-dom";
-import { getCategories } from '../services/Api';
+import { getCategories } from '../services/ProductsApi';
 import Loading  from "../ApiStatus/Loading";
 import Error  from "../ApiStatus/Error";
 import  Success  from "../ApiStatus/Success";
-import Navbar from "../Navbar/Navbar";
+import Navbar from "../Layout/Navbar";
 
 
-const CategoriesPage = () => {
-  const [categories, setCategories] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState(null);
-  const [success] = useState(null);
+const Categories = () => {
 
-  useEffect(() => {
-    const fetchCategories = async () => {
-
-      try {
-        const categoriesData = await getCategories();
-        setCategories(categoriesData);
-      } catch (error) {
-        console.error('Error fetching categories', error);
-        setError('Error fetching categories. Please try again later.');
-      }
-
-      setIsLoading(false);
-    };
-
-    fetchCategories();
-  }, []);
+  const {data: categories, isLoading, error, isSuccess} = useQuery('categories', getCategories)
 
   return (
     <div className="categories">
+
       <Navbar />
       <h2>Categories</h2>
-      {isLoading && <Loading />}
-      {error && <Error message={error} />}
-      {success && <Success message={success} />}
 
-      {!isLoading && !error && !success && (
+      {isLoading && <Loading />}
+      {error && <Error />}
+
+      {!isLoading && !error && isSuccess && (
         <div className="categories-grid">
           {categories.map((category) => (
-              <Link to={`/products?category=${category.id}`}className="category-item">
+              <Link to={`/products?category=${category.id}`} className="category-item" key={category.id}>
               <img src={category.image} alt={category.name} className="category-image" />
               <h1 className="category-name">{category.name}</h1>
               </Link>
@@ -52,4 +35,4 @@ const CategoriesPage = () => {
   );
 };
 
-export default CategoriesPage;
+export default Categories;

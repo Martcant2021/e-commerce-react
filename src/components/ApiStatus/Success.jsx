@@ -1,7 +1,7 @@
 import React from 'react';
 
-const Success = ({ message }) => {
-  return <div className="success-message">{message}</div>;
+const Success = ({message}) => {
+  return <div>{message}</div>;
 };
 
 export default Success;
