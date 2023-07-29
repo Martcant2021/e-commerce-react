@@ -43,7 +43,7 @@ export const getProductsByCategory = async (categoryId) => {
 
 /*---- ADMIN USERS ---- */
 
-export const createProducts = async (productData) =>{
+export const createProduct = async (productData) =>{
     try{
         const response = await axios.post(`${API_URL}/products`, productData)
         return response.data

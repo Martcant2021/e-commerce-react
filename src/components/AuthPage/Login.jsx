@@ -2,13 +2,13 @@ import React, { useState } from "react";
 import { Link , useNavigate} from "react-router-dom";
 import { useLoginMutation } from "../services/AuthApi";
 import Error from "../ApiStatus/Error";
-
+import Navbar from "../Layout/Navbar";
+import MyProfile from "../pages/MyProfile";
 
 const Login = () =>{
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const navigate = useNavigate()
-    const [error, setError] = useState(false)
 
     const loginMutation = useLoginMutation();
     
@@ -16,20 +16,23 @@ const Login = () =>{
     const handleLogin = async (e)=>{
         e.preventDefault();
         try{
-            await loginMutation.mutateAsync({ email: email, password: password})
-            setError(false)
-            navigate('/')
+            const user = await loginMutation.mutateAsync({  email: email, password: password});
+            
+            navigate('/profile');
+            console.log(user)
         }catch(error){
-            setError(true)
             console.error('error', error)
         }
     }
-    
+
+
 
     return(
         <div>
+            <Navbar/>
             <h1>Login</h1>
-            {error && <Error message="incorrect password or invalid email"/>}
+            
+            {loginMutation.isError &&( <Error message="incorrect password or invalid email"/>)}
             <form onSubmit={handleLogin}>
                 <div>
                     <label htmlFor="email">Email:</label>

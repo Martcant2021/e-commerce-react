@@ -5,23 +5,22 @@ import { registerUser} from "../services/AuthApi";
 import Error from "../ApiStatus/Error";
 import Success from "../ApiStatus/Success";
 import { useForm, FormProvider } from 'react-hook-form'
+import Navbar from "../Layout/Navbar";
 
 
 const Register =()=>{
     const methods = useForm()
     const navigate = useNavigate()
-    const [isSuccess, setSuccess] = useState(false)
-    const [error, setError] = useState('')
+
 
     const mutation = useMutation(registerUser, {
         onSuccess: () =>{
-            setSuccess(true)
-            setError('')
-            navigate("/")
+            navigate("/login");
 
         },
         onError: (error)=>{
-            setError(error)
+            console.error(error)
+            return <Error message="Error fetching user data" />;
         }
     })
 
@@ -42,9 +41,8 @@ const Register =()=>{
 
     return(
         <div>
+            <Navbar/>
             <h2>Register</h2>
-            {isSuccess && <Success message="registered complete"/> }
-            {error && <Error message="error"/> }
             
             <FormProvider {...methods}>
                 <form onSubmit={methods.handleSubmit(handleRegister)}>

@@ -6,6 +6,7 @@ import Products from "./pages/Products";
 import NotFound from  "./ApiStatus/NotFound";
 import Login from "./AuthPage/Login";
 import Register from "./AuthPage/Register";
+import MyProfile from "./pages/MyProfile";
 
 
 
@@ -17,6 +18,8 @@ function RoutesApp() {
             <Route exact path="/products" Component={ProductsByCategory} />
             <Route exact path="/login" Component={Login} />
             <Route exact path="/register" Component={Register} />
+            <Route exact path="/profile" Component={MyProfile} />
+            <Route exact path="/notfound" Component={NotFound} />
 
         </Routes>
         
