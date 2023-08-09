@@ -7,8 +7,9 @@ import NotFound from  "./ApiStatus/NotFound";
 import Login from "./AuthPage/Login";
 import Register from "./AuthPage/Register";
 import MyProfile from "./pages/MyProfile";
-
-
+import AdminTools from "./admin/AdminTools";
+import EditProduct from "./admin/EditProduct";
+import EditCategory from "./admin/EditCategory";
 
 function RoutesApp() {
     return(
@@ -21,6 +22,10 @@ function RoutesApp() {
             <Route exact path="/profile" Component={MyProfile} />
             <Route exact path="/notfound" Component={NotFound} />
 
+            {/* admin routes */}
+            <Route exact path="/admintools" Component={AdminTools} />
+            <Route exact path="/edit/:productId" Component={EditProduct} />
+            <Route exact path="/editCategory/:categoryId" Component={EditCategory} />
         </Routes>
         
     )

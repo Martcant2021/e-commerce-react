@@ -1,17 +1,19 @@
 import React from "react";
-import { useQuery } from "react-query";
+import { useQuery, useQueryClient } from "react-query";
 import { getLoggedInUser } from "../services/AuthApi";
 import Error from "../ApiStatus/Error";
 import Navbar from "../Layout/Navbar";
 import {format} from "date-fns"
-import { useNavigate} from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
+import Loading from "../ApiStatus/Loading";
 
 
 const MyProfile = ({  }) => {
-  const accessToken = localStorage.getItem('access_token');
-  const navigate = useNavigate()
+    const accessToken = localStorage.getItem('access_token');
+    const navigate = useNavigate()
+    const queryClient = useQueryClient();
 
-  const { data: user, isLoading, isError } = useQuery(
+    const { data: user, isLoading, isError } = useQuery(
     ["user", accessToken],() => getLoggedInUser(),
     {
       enabled: !!accessToken, 
@@ -20,12 +22,13 @@ const MyProfile = ({  }) => {
 
   const handleLogout = () =>{
     localStorage.removeItem('access_token');
+    queryClient.invalidateQueries('user');
     navigate("/")
 }
 
 
   if (isLoading) {
-    return <div>Loading...</div>;
+    return <Loading/>;
   }
 
   if (isError) {
@@ -46,6 +49,14 @@ const MyProfile = ({  }) => {
             <p>Name: {user.name}</p>
             <p>email: {user.email}</p>
             <p>Created At: {" "}{format(new Date(user.creationAt), "dd-MM-yyyy")}</p>
+
+          </div>
+        )}
+        {user.isAdmin && (
+          <div>
+            <p>{user.role}</p>
+
+            <Link to="/admintools">admin tools</Link>
 
           </div>
         )}

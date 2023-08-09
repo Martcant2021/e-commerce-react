@@ -36,7 +36,8 @@ export const getLoggedInUser = async () =>{
                 Authorization:  `Bearer ${accessToken}`,
             }
         });
-        return response.data
+        const user = response.data
+        return { ...user, isAdmin: user.role === 'admin'}
     }catch (error) {
         console.error('Error fetching users', error);
         throw error;
