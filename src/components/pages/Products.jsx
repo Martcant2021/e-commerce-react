@@ -7,8 +7,7 @@ import Error from "../ApiStatus/Error";
 import Navbar from "../Layout/Navbar";
 import { getLoggedInUser } from "../services/AuthApi";
 import { Link } from "react-router-dom";
-
-
+import { useCart } from "../cart/CartContext";
 
 
 const Products = () => {
@@ -16,17 +15,23 @@ const Products = () => {
 
     const { data, isLoading, isError, isSuccess, fetchNextPage, hasNextPage } = useInfiniteQuery('products',({pageParam={offset:0,limit:40}})=> getProducts(pageParam.offset, pageParam.limit),
     {
-
-    getNextPageParam: (lastPage) =>{
-      if (lastPage.length ===0)return false;
-        return {
-          offset : lastPage.length ,
-          limit:40  
+        
+    
+        
+        getNextPageParam: (lastPage) =>{
+            if (lastPage.length ===0)return false;
+            return {
+                offset : lastPage.length ,
+                limit:40  
+            }
         }
-    }
-  });
+    });
+    
+
+    const {addToCart} = useCart();
 
 
+    
     if(isLoading)  return <Loading />
     if(isError)  return <Error />
 
@@ -46,10 +51,12 @@ const Products = () => {
 				<img src={product.images} alt={product.title} className="product-image" />
 				<p className="product-title">{product.title}</p>
 				<p className="product-price">$ {product.price}</p>
-
 				{user?.isAdmin && (
                             <Link to={`/edit/${product.id}/`}>Edit</Link>
                         )}
+                {user &&(
+                    <button onClick={()=> addToCart(product)}>Add to Cart</button>
+                )}
 				</div>
 			))}
 			</div>
