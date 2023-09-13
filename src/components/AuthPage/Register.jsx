@@ -6,6 +6,7 @@ import Error from "../ApiStatus/Error";
 import Success from "../ApiStatus/Success";
 import { useForm, FormProvider } from 'react-hook-form'
 import Navbar from "../Layout/Navbar";
+import './AuthStyles.css'
 
 
 const Register =()=>{
@@ -42,26 +43,28 @@ const Register =()=>{
     return(
         <div>
             <Navbar/>
-            <h2>Register</h2>
-            
-            <FormProvider {...methods}>
-                <form onSubmit={methods.handleSubmit(handleRegister)}>
-                    <div>
-                        <label htmlFor="name">Name:</label>
-                        <input type="name" name="" id="name" {...methods.register('name', {required: true})} />
-                    </div>
-                    <div>
-                        <label htmlFor="email">Email:</label>
-                        <input type="email" name="" id="email" {...methods.register('email', {required: true})} />
-                    </div>
-                    <div>
-                        <label htmlFor="password">Password:</label>
-                        <input type="password" name="" id="password" {...methods.register('password', {required: true})} />
-                    </div>
-                        <input type="hidden" {...methods.register('avatar')} />
-                    <button type="submit">Register</button>
-                </form>
-            </FormProvider>
+            <div className="login-container">
+                <FormProvider {...methods}>
+                    <form onSubmit={methods.handleSubmit(handleRegister)} className="login-form">
+                        <h1>Register</h1>
+                        <div className="form-group">
+                            <label htmlFor="name">Name</label>
+                            <input type="name" name="" id="name" {...methods.register('name', {required: true})} />
+                        </div>
+                        <div className="form-group">
+                            <label htmlFor="email">Email</label>
+                            <input type="email" name="" id="email" {...methods.register('email', {required: true})} />
+                        </div>
+                        <div className="form-group">
+                            <label htmlFor="password">Password</label>
+                            <input type="password" name="" id="password" {...methods.register('password', {required: true})} />
+                        </div>
+                            <input type="hidden" {...methods.register('avatar')} />
+                        <button type="submit" className="login-button">Register</button>
+                    </form>
+                </FormProvider>
+
+            </div>
         </div>
     )
 

@@ -1,13 +1,14 @@
 import React, {useState} from "react";
 import { NavLink, useLocation, useNavigate } from "react-router-dom";
-import './LayoutStyle.css';
 import { useCart } from "../cart/CartContext";
+import './LayoutStyle.css';
 import '../cart/CartStyles.css'
+import Products from "../pages/Products";
 
 
 const Navbar =()=>{
 
-    const { cartItem, getTotalPrice, getTotalQuantity } = useCart();
+    const { cartItem, getTotalPrice, getTotalQuantity, RemoveProduct, handleQuantityChange } = useCart();
     const [isCartOpen, setIsCartOpen] = useState(false);
 
     const accessToken = localStorage.getItem('access_token');
@@ -24,6 +25,10 @@ const Navbar =()=>{
 
     const isNotAuthPage = location.pathname !== "/login" && location.pathname !== "/register"
 
+
+
+
+    
 
     return(
         <div >
@@ -55,6 +60,7 @@ const Navbar =()=>{
             <a href="/" className="navbar-brand" >Martin commerce</a>
             )}
             </nav>
+
         <div className={`cart-sidebar ${isCartOpen ? 'open' : ''}`}>
             <div className="cart-sidebar-header">
                 <h3>Your Cart</h3>
@@ -63,9 +69,19 @@ const Navbar =()=>{
             <div className="cart-sidebar-items">
                 {cartItem.map((item) => (
                 <div key={item.id} className="cart-item">
+				    <img src={item.images}/>
                     <p>{item.title}</p>
                     <p>${item.price}</p>
-                    <p>Quantity: {item.quantity}</p>
+                    <select
+                        value={item.quantity}
+                        onChange={(e) => handleQuantityChange(item, parseInt(e.target.value))}>
+                        {Array.from({ length: 10 }, (_, index) => index + 1).map((value) => (
+                        <option key={item.quantity} value={value}>
+                            {value}
+                        </option>
+                        ))}
+                    </select>
+                    <button className="cart-icon" onClick={()=> RemoveProduct(item.id)}><ion-icon name="trash-outline"></ion-icon></button>
                 </div>
                 ))}
             </div>
@@ -73,7 +89,8 @@ const Navbar =()=>{
                 <p>Total:</p>
                 <p>${getTotalPrice(cartItem)}</p>
             </div>
-            
+
+            <button className="cart-sidebar-button">go to</button>
         </div>
 
         </div>

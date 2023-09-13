@@ -23,7 +23,7 @@ const MyProfile = ({  }) => {
   const handleLogout = () =>{
     localStorage.removeItem('access_token');
     queryClient.invalidateQueries('user');
-    navigate("/")
+    navigate("/login")
 }
 
 

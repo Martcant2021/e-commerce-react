@@ -6,22 +6,22 @@
     padding: 20px;
   }
   
-  h2 {
+  .my-profile-container h2 {
     margin-bottom: 20px;
   }
   
-  form {
+  .my-profile-container form {
     display: flex;
     flex-direction: column;
   }
   
   /* Estilos para los campos del formulario */
-  label {
+  .my-profile-container label {
     font-weight: bold;
     margin-bottom: 5px;
   }
   
-  input,
+  .my-profile-container input,
   select {
     padding: 10px;
     margin-bottom: 15px;
@@ -29,7 +29,7 @@
     border-radius: 5px;
   }
   
-  button {
+  .my-profile-container button {
     padding: 10px 20px;
     background-color: #f53c3e;
     color: #ffffff;

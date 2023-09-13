@@ -12,7 +12,6 @@ const Cart = () =>{
                 <div>
                     <p>Quantity: {item.quantity}</p>
                     <button onClick={()=>RemoveProduct(item.id)}>Remove</button>
-
                 </div>
             ))}
             <p>Total price ${getTotalPrice}</p>

@@ -26,6 +26,7 @@
     display: flex;
     gap: 10px;
     padding: 10px 20px;
+    margin-right: 10px;
   }
   
   .navbar-link {
@@ -43,7 +44,7 @@
   .navbar-icon {
     text-decoration: none;
     color: #fff;
-    padding: 0px;
+    padding: 1px;
     font-size: 20px;
     background-color: transparent;
     border: transparent;
@@ -57,11 +58,10 @@
   }
 
   .search-bar {
-    display: flex;
     align-items: center;
+    padding: 20px 5px 0px 5px;
     /* background-color: #fff; */
     /* border-radius: 20px; */
-    padding: 11px 10px;
     /* text-align: center;*/
   }
   
@@ -74,7 +74,7 @@
     text-align: center;
     border: 1px solid #fff;
     padding: 5px; 
-    
+
   }
   
   .search-bar button {
@@ -83,6 +83,8 @@
     outline: none;
     background-color: transparent;
     cursor: pointer;
+    top: 3px;
+    position: relative;
   }
   
 
